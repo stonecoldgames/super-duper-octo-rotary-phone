@@ -67,9 +67,9 @@ class Teacher(object):
       for action in self.actions:
         print("~"+action+"\n")
     elif masterin == "grade":
-      GradeInterface(course,student)
+      self.GradeInterface(course,student)
     elif masterin == "assign":
-      AssignmentInterface(course,student)
+      self.AssignmentInterface(course,student)
   def GradeInterface(self,course,student):
     print ("Welcome to StoneNet, the world's only straightforward grading system.\nYou are currently in {}'s {} grading interface.\nPlease enter the name of the action you'd like to perform below or type 'exit' to exit. For a list of actions, type 'actions'".format(student.name,course.name))
     masterin = input(">").lower()
@@ -93,19 +93,31 @@ class Teacher(object):
   
   def AssignmentInterface(self,course,student):
     print ("Welcome to StoneNet, the world's only straightforward grading system.\nYou are currently in {}'s {} assignment interface.\nPlease enter the name of the action you'd like to perform below or type 'exit' to exit. For a list of actions, type 'actions'".format(student.name,course.name))
+    masterin = input(">").lower()
     if masterin == "exit":
       pass
     elif masterin == "actions":
       for action in self.assignmentactions:
         print("~"+ action +"\n")
     elif masterin.startswith("new"):
+      self.NewAssignment(course)
     elif masterin.startswith("delete"):
+      self.DeleteAssignment(course)
+    else:
+      pass
+
       #delete the Assignment
+  def DeleteAssignment(self,course):
+    masterin = input(">").lower()
+    for assignment in course.assignments:
+      if masterin.endswith(assignment.name):
+        course.assignments.remove(assignment)
+        assignment.__delete__()
 
   def NewAssignment(self,course):
     assignmentname = input("Assignment Name (please no spaces,special characters,etc):")
     #figure out how to make new assignment with unique names etc
-    
+
     
   def GradeCourse(self,student,course):
     gradechoice = input("Letter Grade: ")
